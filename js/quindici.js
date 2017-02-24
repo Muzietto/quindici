@@ -3,11 +3,7 @@
   
   define([], function() {
     var size = 4,
-    N = size - 1,
-    model = {
-      h: null,
-      v: null
-    }
+    N = size - 1
     ;
 
     function buildModel() {
@@ -21,7 +17,17 @@
     }
 
     function rndBidimArray(size) {
-      return [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,0]];
+      var result = [],
+      count = 0
+      ;
+      for (var i = 0; i < size; i++) {
+        result[i] = [];
+        for (var j = 0; j < size; j++) {
+          result[i][j] = ++count;
+        }
+      }
+      result[size-1][size-1] = 0;
+      return result;
     }
 
     function reverseModel(model) {
