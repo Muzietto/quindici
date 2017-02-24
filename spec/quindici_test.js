@@ -53,7 +53,6 @@
         expect(JSON.stringify(QD.move(model,'30d').h)).to.be.eql('[[1,2,3,0],[5,6,7,4],[9,10,11,8],[13,14,15,12]]');
         expect(JSON.stringify(QD.move(model,'32d').h)).to.be.eql('[[1,2,3,4],[5,6,7,8],[9,10,11,0],[13,14,15,12]]');
       });
-    });
       it('can assign complex moves up', function() {
         var model = QD.buildModel(),
         shifted = QD.move(model,'30d')
@@ -61,5 +60,16 @@
         expect(JSON.stringify(QD.move(shifted,'33u').h)).to.be.eql('[[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,0]]');
         expect(JSON.stringify(QD.move(shifted,'32u').h)).to.be.eql('[[1,2,3,4],[5,6,7,8],[9,10,11,0],[13,14,15,12]]');
       });
+      it('can play sequences of moves', function() {
+        var model = QD.buildModel(),
+        move01 = QD.move(model,'31d'),
+        move02 = QD.move(move01,'01r'),
+        move03 = QD.move(move02,'02u'),
+        move04 = QD.move(move03,'12l'),
+        move05 = QD.move(move04,'10d')
+        ;
+        expect(JSON.stringify(move05.h)).to.be.eql('[[1,0,3,4],[9,2,6,7],[10,5,11,8],[13,14,15,12]]');
+      });
+    });
   });
 })();
