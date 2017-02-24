@@ -40,6 +40,13 @@
         expect(JSON.stringify(QD.move(model,'03r').h)).to.be.eql('[[1,2,3,4],[5,6,7,8],[9,10,11,12],[0,13,14,15]]');
         expect(JSON.stringify(QD.move(model,'23r').h)).to.be.eql('[[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,0,15]]');
       });
+      it('can assign complex moves left', function() {
+        var model = QD.buildModel(),
+        shifted = QD.move(model,'03r')
+        ;
+        expect(JSON.stringify(QD.move(shifted,'03l').h)).to.be.eql('[[1,2,3,4],[5,6,7,8],[9,10,11,12],[0,13,14,15]]');
+        expect(JSON.stringify(QD.move(shifted,'23l').h)).to.be.eql('[[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,0,15]]');
+      });
     });
   });
 })();
