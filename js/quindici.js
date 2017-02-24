@@ -16,6 +16,7 @@
       };
     }
 
+    // for the moment it produces [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,0]];
     function rndBidimArray(size) {
       var result = [],
       count = 0
@@ -42,18 +43,36 @@
       return result;
     }
 
-    function move(model, str) { // str e.g. '1,2,r'
-      var pieces = str.split(','),
-      x = pieces[0],
-      y = pieces[1],
+    function move(model, str) { // str e.g. '12r'
+      var result = clone(model),
+      pieces = str.split(''),
+      x = parseInt(pieces[0]),
+      y = parseInt(pieces[1]),
       dir = pieces[2]
       ;
-      return {
-        r: moveRight(model.h, x, y),
-        l: moveLeft(model.h, x, y),
-        u: moveRight(model.v, y, x),
-        d: moveLeft(model.v, y, x)        
-      }[dir];
+      switch (dir) {
+        case 'r': {
+          result.h = moveRight(model.h, x, y);
+          result.v = reverseModel(result.h);
+          break;
+        }
+        case 'l': {
+          result.h = moveLeft(model.h, x, y);
+          result.v = reverseModel(result.h);
+          break;
+        }
+        case 'd': {
+          result.v = moveRight(model.v, y, x);
+          result.h = reverseModel(result.v);
+          break;
+        }
+        case 'u': {
+          result.v = moveLeft(model.v, y, x);
+          result.h = reverseModel(result.v);
+          break;
+        }
+      }
+      return result;
     }
 
     function moveRight(model, x, y) {
