@@ -36,32 +36,37 @@
       return result;
     }
 
-    function move(model, str) { // e.g. '1,2,r'
+    function move(model, str) { // str e.g. '1,2,r'
       var pieces = str.split(','),
       x = pieces[0],
       y = pieces[1],
       dir = pieces[2]
       ;
       return {
-        r: moveRight(model.h,x,y),
-        l: moveLeft(model.h,x,y),
-        u: moveRight(model.v,y,x),
-        d: moveLeft(model.v,y,x)        
+        r: moveRight(model.h, x, y),
+        l: moveLeft(model.h, x, y),
+        u: moveRight(model.v, y, x),
+        d: moveLeft(model.v, y, x)        
       }[dir];
     }
 
-    function moveRight(model) {
-      
+    function moveRight(model, x, y) {
+      var result = clone(model)
+      ;
+      result[y] = slideRight(model[y], x);
+      return result;
     }
 
-    function moveLeft(model) {
-      
+    function moveLeft(model, x, y) {
+      var result = clone(model)
+      ;
+      result[y] = slideLeft(model[y], x);
+      return result;
     }
 
     function clone(arr) {
       return JSON.parse(JSON.stringify(arr));
     }
-
 
     function emptySlot(arr) {
       return arr.findIndex(elem => (elem === 0));

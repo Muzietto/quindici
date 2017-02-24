@@ -21,6 +21,19 @@
       it('can build models', function() {
         expect(JSON.stringify(QD.buildModel().v)).to.be.eql('[[1,5,9,13],[2,6,10,14],[3,7,11,15],[4,8,12,0]]');
       });
+      it('can move tiles right', function() {
+        var model = QD.buildModel()
+        ;
+        expect(JSON.stringify(QD.moveRight(model.h,2,3))).to.be.eql('[[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,0,15]]');
+        expect(JSON.stringify(QD.moveRight(model.h,0,3))).to.be.eql('[[1,2,3,4],[5,6,7,8],[9,10,11,12],[0,13,14,15]]');
+      });
+      it('can move tiles left', function() {
+        var model = QD.buildModel(),
+        shifted = QD.moveRight(model.h,0,3)
+        ;
+        expect(JSON.stringify(QD.moveLeft(shifted,1,3))).to.be.eql('[[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,0,14,15]]');
+        expect(JSON.stringify(QD.moveLeft(shifted,3,3))).to.be.eql('[[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,0]]');
+      });
     });
   });
 })();
