@@ -47,6 +47,19 @@
         expect(JSON.stringify(QD.move(shifted,'03l').h)).to.be.eql('[[1,2,3,4],[5,6,7,8],[9,10,11,12],[0,13,14,15]]');
         expect(JSON.stringify(QD.move(shifted,'23l').h)).to.be.eql('[[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,0,15]]');
       });
+      it('can assign complex moves down', function() {
+        var model = QD.buildModel()
+        ;
+        expect(JSON.stringify(QD.move(model,'30d').h)).to.be.eql('[[1,2,3,0],[5,6,7,4],[9,10,11,8],[13,14,15,12]]');
+        expect(JSON.stringify(QD.move(model,'32d').h)).to.be.eql('[[1,2,3,4],[5,6,7,8],[9,10,11,0],[13,14,15,12]]');
+      });
     });
+      it('can assign complex moves up', function() {
+        var model = QD.buildModel(),
+        shifted = QD.move(model,'30d')
+        ;
+        expect(JSON.stringify(QD.move(shifted,'33u').h)).to.be.eql('[[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,0]]');
+        expect(JSON.stringify(QD.move(shifted,'32u').h)).to.be.eql('[[1,2,3,4],[5,6,7,8],[9,10,11,0],[13,14,15,12]]');
+      });
   });
 })();
