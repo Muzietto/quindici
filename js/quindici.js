@@ -20,9 +20,20 @@
       };
     }
 
+    function rndBidimArray(size) {
+      return [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,0]];
+    }
 
     function reverseModel(model) {
-      
+      var result = []
+      ;
+      for (var i = 0; i < size; i++) {
+        result[i] = [];
+        for (var j = 0; j < size; j++) {
+          result[i][j] = model[j][i];
+        }
+      }
+      return result;
     }
 
     function move(model, str) { // e.g. '1,2,r'
@@ -87,7 +98,7 @@
       move: move,
       moveRight: moveRight,
       moveLeft: moveLeft,
-      reverseModel: reverseModel
+      buildModel: buildModel
     };
   });
   

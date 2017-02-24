@@ -18,6 +18,9 @@
         expect(QD.slideLeft([0,2,10,1],1)).to.be.eql([2,0,10,1]);
         expect(QD.slideLeft([0,2,10,1],3)).to.be.eql([2,10,1,0]);
       });
+      it('can build models', function() {
+        expect(JSON.stringify(QD.buildModel().v)).to.be.eql('[[1,5,9,13],[2,6,10,14],[3,7,11,15],[4,8,12,0]]');
+      });
     });
   });
 })();
