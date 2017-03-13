@@ -55,64 +55,67 @@
         });
       });
 
-      xdescribe('can serialize', function() {
-        it('can serialize empty objects', function() {
+      describe('can serialize', function() {
+        it('empty objects', function() {
           expect(HY.serialize({}))
             .to.be.eql([]);
         });
-        it('can serialize objects by their keys', function() {
+        it('objects by their keys', function() {
           expect(HY.serialize({'pete':'nick','barbara':'nick'}))
             .to.be.eql([['pete','nick'],['barbara','nick']]);
         });
-        it('can solve empty hierarchies', function() {
+      });
+
+      describe('can solve', function() {
+        it('empty hierarchies', function() {
           expect(HY.denormalize({}))
             .to.be.eql({});
         });
-        it('can solve single hierarchies', function() {
+        it('single hierarchies', function() {
           expect(HY.denormalize({'pete':'nick'}))
             .to.be.eql({'nick':[{'pete':[]}]});
         });
-        it('can solve multiple hierarchies 1', function() {
+        it('multiple hierarchies 1', function() {
           expect(HY.denormalize({'pete':'nick','barbara':'nick'}))
             .to.be.eql({'nick':[{'pete':[]},{'barbara':[]}]});
         });
-        it('can solve multiple hierarchies 2', function() {
+        it('multiple hierarchies 2', function() {
           expect(HY.denormalize({'pete':'nick','barbara':'nick','philip':'nick'}))
             .to.be.eql({'nick':[{'pete':[]},{'barbara':[]},{'philip':[]}]});
         });
-        it('can solve chained hierarchies 1', function() {
+        it('chained hierarchies 1', function() {
           expect(HY.denormalize({'pete':'nick','nick':'sophie'}))
             .to.be.eql({'sophie':[{'nick':[{'pete':[]}]}]});
         });
-        it('can solve chained hierarchies 2', function() {
+        it('chained hierarchies 2', function() {
           expect(HY.denormalize({'nick':'sophie','pete':'nick'}))
             .to.be.eql({'sophie':[{'nick':[{'pete':[]}]}]});
         });
-        it('can solve chained hierarchies 3', function() {
+        it('chained hierarchies 3', function() {
           expect(HY.denormalize({'barbara':'nick','nick':'sophie','pete':'nick'}))
             .to.be.eql({'sophie':[{'nick':[{'barbara':[]},{'pete':[]}]}]});
         });
-        it('can solve chained hierarchies 4', function() {
+        it('chained hierarchies 4', function() {
           expect(HY.denormalize({'pete':'nick','nick':'sophie','sophie':'jonas'}))
             .to.be.eql({'jonas':[{'sophie':[{'nick':[{'pete':[]}]}]}]});
         });
-        it('can solve chained hierarchies 5', function() {
+        it('chained hierarchies 5', function() {
           expect(_clone(HY.denormalize({'nick':'sophie','pete':'nick','sophie':'jonas'})))
             .to.be.eql(_clone({'jonas':[{'sophie':[{'nick':[{'pete':[]}]}]}]}));
         });
-        it('can solve complex cases 1', function() {
+        it('complex cases 1', function() {
           expect(HY.denormalize({'pete':'nick','nick':'sophie','sophie':'jonas','barbara':'nick'}))
             .to.be.eql({'jonas':[{'sophie':[{'nick':[{'pete':[]},{'barbara':[]}]}]}]});
         });
-        it('can solve complex cases 2 - layers of bosses', function() {
+        it('complex cases 2 - layers of bosses', function() {
           expect(HY.denormalize({'pete':'nick','nick':'sophie','luke':'sophie','sophie':'jonas','barbara':'nick'}))
             .to.be.eql({'jonas':[{'sophie':[{'nick':[{'pete':[]},{'barbara':[]}]},{'luke':[]}]}]});
         });
-        it('can solve complex cases 2 - given testcase', function() {
+        it('complex cases 2 - given testcase', function() {
           expect(HY.denormalize({'pete':'nick','barbara':'nick','nick':'sophie','sophie':'jonas'}))
             .to.be.eql({'jonas':[{'sophie':[{'nick': [{'pete':[]},{'barbara':[]}]}]}]});
         });
-        it('can solve complex cases 3 - temporary inconsistencies', function() {
+        it('complex cases 3 - temporary inconsistencies', function() {
           expect(HY.denormalize({'pete':'nick','barbara':'nick','sophie':'jonas','nick':'sophie'}))
             .to.be.eql({'jonas':[{'sophie':[{'nick': [{'pete':[]},{'barbara':[]}]}]}]});
         });

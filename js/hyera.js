@@ -1,52 +1,24 @@
 (function() {
   'use strict';
   function denormalize(obj) {
-    return denorm(serialize(obj), {}, {});
+    if (Object.keys(obj).length === 0) return {};
+    var input = serialize(obj),
+    firstRel = {}
+    ;
+    firstRel[input[0][1]] = [input[0][0]];
+    return denorm(input.slice(1), firstRel, firstRel);
+  }
+
+  function denorm(rels, accObj, resultTree) {
+    return resultTree;
   }
 
   function serialize(obj) {
     var result = []
     ;
     Object.keys(obj).forEach(key => result.push([key,obj[key]]));
+    // TODO - put array ordering here
     return result;
-  }
-
-  function denorm(relsArray, accObj, previousObj) {
-    if (relsArray.length === 0) return accObj;
-    var result = _clone(accObj),
-    previous = _clone(previousObj)
-    rels = _clone(relsArray),
-    employee = rels[0][0],
-    boss = rels[0][1],
-    relationship = {},
-    currentBoss,
-    previousBoss
-    ;
-    if (Object.keys(result).length === 0) { // accObj, previousObj === {}
-      relationship[employee] = [];
-      result[boss] = [relationship];
-      return denorm(rels.slice(1), result, result);
-    }
-    currentBoss = name(result);
-    if (currentBoss === boss) { // push new employee && backtrack
-      relationship[employee] = [];
-      //result[boss].push(relationship);
-      previousBoss = name(previous);
-      previous[previousBoss].filter(empObj => name(empObj) === boss)[0][boss].push(relationship);
-      return denorm(rels.slice(1), previous, previous);
-    }
-    if (currentBoss === employee) {
-      relationship[boss] = [result];
-      return denorm(rels.slice(1), relationship);
-    }
-    if (result[currentBoss].length === 0) { // backtrack
-      return denorm(rels, topmost);
-    }
-    relationship[currentBoss] = result[currentBoss]
-      .map(function(potentialBossObj) {
-        return denorm(rels, potentialBossObj);
-      });
-    return relationship;
   }
 
   function found(newLabel, node) {
