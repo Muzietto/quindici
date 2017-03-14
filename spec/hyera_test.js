@@ -119,11 +119,14 @@
           expect(HY.denormalize({'pete':'nick','barbara':'nick','sophie':'jonas','nick':'sophie'}))
             .to.be.eql({'jonas':[{'sophie':[{'nick': [{'pete':[]},{'barbara':[]}]}]}]});
         });
-        xit('can detect people with two bosses', function() {
+      });
+
+      xdescribe('can detect', function() {
+        it('people with two bosses', function() {
           expect(() => HY.denormalize({'pete':'nick','pete':'sophie'}))
             .to.throw;
         });
-        xit('can detect circular relationships', function() {
+        it('circular relationships', function() {
           expect(() => HY.denormalize({'pete':'nick','nick':'sophie','sophie':'jonas','jonas':'pete'}))
             .to.throw;
         });
