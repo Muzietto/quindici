@@ -1,0 +1,3 @@
+sgamma = {
+  color: "green"
+}

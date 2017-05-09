@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+    <title>crazy tests</title>
+    <script src="require/require.js"></script>
+    <script>
+    var log = console.log;
+    var reqOne = require.config({
+      context: "version1",
+      baseUrl: "js/v1/",
+    });
+
+    reqOne(["require", "alpha", "beta", 'gamma', 'filippo'],
+    function(require,   alpha,   beta) {
+      log("alpha version is: " + alpha.version); //prints 1
+      log("beta version is: " + beta.version); //prints 1
+      log('gamma/sgamma brings ' + sgamma.color)
+      log('filippo brings ' + filfilippo);
+
+      setTimeout(function() {
+        require(["omega"],
+          function(omega) {
+            log("version1 omega loaded with version: " +
+                 omega.version); //prints 1
+          }
+        );
+      }, 100);
+    });
+
+    var reqTwo = require.config({
+          context: "version2",
+          baseUrl: "js/v2/"
+        });
+
+    reqTwo(["require", "alpha", "beta", 'globbal'/*, 'filippo'*/],
+    function(require,   alpha,   beta) {
+      log("alpha version is: " + alpha.version); //prints 2
+      log("beta version is: " + beta.version); //prints 2
+      log('globbal brings ' + globbal_1);
+      log('globbal brings ' + globbal_2);
+      log('filippo brings also here ' + filfilippo);
+
+      setTimeout(function() {
+        require(["omega"],
+          function(omega) {
+            log("version2 omega loaded with version: " +
+                omega.version); //prints 2
+          }
+        );
+      }, 100);
+    });
+    </script>
+  </head>
+  <body>
+      <h1 style="margin-left:20px;">quindici tests</h1>
+      <div id="mocha"></div>
+  </body>
+</html>
+ 
